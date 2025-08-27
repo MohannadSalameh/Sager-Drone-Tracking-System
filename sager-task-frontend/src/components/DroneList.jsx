@@ -6,6 +6,8 @@ import {
 } from "../store/dronesSlice";
 import { isAllowed } from "../utils/formatters";
 
+
+
 export default function DroneList() {
   const drones = useSelector(selectAllDrones);
   const selected = useSelector(selectSelected);

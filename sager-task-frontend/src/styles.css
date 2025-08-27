@@ -22,44 +22,15 @@ body,
   color: var(--text);
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
     "Helvetica Neue", Arial;
+  overflow: hidden;
+  position: relative;
 }
 
+/* Map page layout */
 .app {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  height: 100%;
-}
-.sidebar {
-  background: var(--panel);
-  border-right: 1px solid #222631;
-  overflow: hidden;
   display: flex;
-  flex-direction: column;
-}
-.sidebar .title {
-  padding: 14px 16px;
-  font-weight: 700;
-  letter-spacing: 0.4px;
-  border-bottom: 1px solid #222631;
-}
-.list {
-  overflow: auto;
-}
-.item {
-  padding: 12px 16px;
-  border-bottom: 1px solid #1e2230;
-  cursor: pointer;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 8px;
-  align-items: center;
-}
-.item:hover {
-  background: #131722;
-}
-.item.active {
-  outline: 2px solid var(--accent);
-  background: #10141e;
+  height: 100%;
+  width: 100%;
 }
 .badge {
   width: 10px;
@@ -80,6 +51,14 @@ body,
 
 .map-container {
   position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Make sure the map fills its container */
+.mapboxgl-map {
+  width: 100% !important;
+  height: 100% !important;
 }
 .counter {
   position: absolute;
@@ -254,6 +233,12 @@ body,
   gap: 20px;
 }
 
+@media (max-width: 768px) {
+  .dashboard-details {
+    grid-template-columns: 1fr;
+  }
+}
+
 .detail-card {
   background-color: var(--panel);
   border-radius: 8px;
@@ -337,6 +322,31 @@ tr:hover {
 /* Adjust existing styles */
 .app {
   height: calc(100% - 60px);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .app {
+    flex-direction: column;
+  }
+  
+  .dashboard-stats {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-card {
+    padding: 15px;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+  }
 }
 
 .map-container {

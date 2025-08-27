@@ -15,7 +15,6 @@ import {
 import DroneIcon from './DroneIcon'
 import { isAllowed, msToHMS } from '../utils/formatters'
 
-// Enhanced line layer for better visibility
 const lineLayer = {
   id: 'paths',
   type: 'line',

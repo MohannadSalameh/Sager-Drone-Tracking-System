@@ -1,0 +1,306 @@
+.side-panel {
+  width: 330px;
+  background-color: #181818;
+  padding: 15px 0;
+  height: 100%;
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0.7rem 0.6rem;
+  box-shadow: 0px 0 25px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.side-panel.visible {
+  animation: fadeInPanel 0.4s forwards;
+}
+
+@media (max-width: 768px) {
+  .side-panel {
+    width: 280px;
+  }
+  
+  .drone-info-grid {
+    gap: 6px;
+  }
+  
+  .label {
+    font-size: 10px;
+  }
+  
+  .value {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .side-panel {
+    width: 250px;
+    margin: 0.5rem;
+  }
+  
+  .drone-list li {
+    padding: 10px;
+  }
+  
+  .drone-info-grid {
+    gap: 4px;
+  }
+  
+  .label {
+    font-size: 9px;
+  }
+  
+  .value {
+    font-size: 11px;
+  }
+}
+
+.panel-header {
+  display: flex;
+  padding: 10px 20px;
+  border-bottom: 4px solid #080808;
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: none;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.tab {
+  margin-right: 20px;
+  cursor: pointer;
+  color: #aaaaaa;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.tab.active {
+  color: #fff;
+  border-bottom: 2px solid #ff0000;
+}
+
+.drone-list-placeholder {
+  padding: 20px;
+  color: #aaa;
+}
+
+.drone-list {
+  overflow-y: auto;
+  max-height: calc(100% - 100px);
+}
+
+.drone-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.drone-list li {
+  padding: 15px;
+  cursor: pointer;
+  color: #fff;
+  border-bottom: #080808 4px solid;
+  transition: background-color 0.2s ease;
+}
+
+.drone-list li:hover {
+  background-color: #222;
+}
+
+.drone-list li.selected {
+  background-color: #222;
+  border-left: 3px solid red;
+}
+
+.show-panel-btn {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  padding: 0;
+  border-radius: 4px;
+  background: #181818;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  animation: fadeInPanelBtn 0.6s forwards;
+  transition: background 0.3s, transform 0.3s;
+  font-size: 20px;
+}
+
+.show-panel-btn:hover {
+  background: #444;
+  transform: scale(1.05);
+}
+
+.fixed-btn {
+  position: fixed;
+  top: 85px;
+  left: 25px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .fixed-btn {
+    top: 80px;
+    left: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fixed-btn {
+    top: 75px;
+    left: 15px;
+  }
+}
+
+@keyframes fadeInPanelBtn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInPanel {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.side-panel.hide {
+  animation: fadeOutPanel 0.5s forwards;
+}
+
+@keyframes fadeOutPanel {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+.close-panel-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.close-panel-btn:hover {
+  background: #333;
+  color: #ccc;
+}
+
+.drone-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "title status"
+    "serial registration"
+    "pilot organization"
+    "altitude altitude";
+  gap: 8px;
+  padding: 5px 0;
+}
+
+.drone-serial, .drone-registration, .drone-pilot, .drone-organization, .drone-altitude {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.drone-title {
+  grid-area: title;
+  font-size: 16px;
+}
+
+.drone-status {
+  grid-area: status;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.drone-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.drone-serial {
+  grid-area: serial;
+}
+
+.drone-registration {
+  grid-area: registration;
+}
+
+.drone-pilot {
+  grid-area: pilot;
+}
+
+.drone-organization {
+  grid-area: organization;
+}
+
+.drone-altitude {
+  grid-area: altitude;
+}
+
+.label {
+  font-size: 11px;
+  color: #aaa;
+  line-height: 1.2;
+}
+
+.value {
+  font-size: 13px;
+  color: #fff;
+  line-height: 1.2;
+}

@@ -6,9 +6,9 @@ const initialState = {
   focusedSerial: null,
 };
 
-// Helper function to check if drone is allowed to fly
+// Replicate the isAllowed logic directly in the slice to avoid import issues
 const isAllowed = (registration = "") => {
-  return registration.trim().toUpperCase().startsWith("B");
+  return registration.startsWith("B") || registration.includes("-B");
 };
 
 const slice = createSlice({
