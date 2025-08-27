@@ -43,12 +43,11 @@ export default function MapView() {
   const [hovered, setHovered] = useState(null)
   const animationRef = useRef(null)
   
-  // Inject popup/map styling
   useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
       .selected-drone {
-        z-index: 1000 !important;
+        z-index: 10 !important;
         filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
       }
       
@@ -114,7 +113,6 @@ export default function MapView() {
     return () => socket.close()
   }, [dispatch])
 
-  // Calculate bearing between two coordinates for smooth movement
   const calculateBearing = (coord1, coord2) => {
     if (!coord1 || !coord2) return 0;
     
@@ -133,26 +131,22 @@ export default function MapView() {
     return (bearing + 360) % 360
   }
 
-  // Optimized animation loop for smoother movement
   useEffect(() => {
     let frameCount = 0;
     
     const moveDrones = () => {
       frameCount++;
       
-      // Only update drones every 10 frames for slower movement
       if (frameCount % 10 === 0) {
         drones.forEach(drone => {
-          // Reduced movement speed
-          const randomLat = (Math.random() - 0.5) * 0.00002
-          const randomLon = (Math.random() - 0.5) * 0.00002
+          const randomLat = (Math.random() - 0.5) * 0.0001
+          const randomLon = (Math.random() - 0.5) * 0.0001
           
           const newCoord = [
             drone.coord[0] + randomLon,
             drone.coord[1] + randomLat
           ]
           
-          // Update drone position with new coordinates
           dispatch(updateDronePosition({
             serial: drone.serial,
             coord: newCoord,
@@ -164,7 +158,6 @@ export default function MapView() {
       animationRef.current = requestAnimationFrame(moveDrones)
     }
     
-    // Start animation if we have drones
     if (drones.length > 0) {
       animationRef.current = requestAnimationFrame(moveDrones)
     }
@@ -176,7 +169,6 @@ export default function MapView() {
     }
   }, [drones, dispatch])
 
-  // Build paths GeoJSON with performance optimization
   const pathsGeoJSON = useMemo(() => {
     const features = [];
 
@@ -187,8 +179,7 @@ export default function MapView() {
       const color = allowed ? '#00C48C' : '#FF5252';
       const isFocused = focusedSerial === drone.serial;
 
-      // Path line - limit to last 50 points for performance
-      const recentPath = drone.path.slice(-50);
+      const recentPath = drone.path.slice(-200);
       
       features.push({
         type: 'Feature',
@@ -243,23 +234,21 @@ export default function MapView() {
         interactiveLayerIds={[]}
         attributionControl={false}
         logoPosition="bottom-left"
-        // Enhanced map controls
         dragRotate={true}
         touchZoomRotate={true}
         doubleClickZoom={true}
         scrollZoom={{smooth: true, speed: 0.3}}
         minZoom={2}
         maxZoom={18}
-        // Performance optimizations
         cooperativeGestures={true}
         maxPitch={60}
       >
-        {/* Paths source and layer */}
+        
         <Source id="paths" type="geojson" data={pathsGeoJSON}>
           <Layer {...lineLayer} />
         </Source>
 
-        {/* Drone markers */}
+        
         {drones.map((drone) => (
           <Marker
             key={drone.serial}

@@ -55,7 +55,6 @@ body,
   height: 100%;
 }
 
-/* Make sure the map fills its container */
 .mapboxgl-map {
   width: 100% !important;
   height: 100% !important;
@@ -69,6 +68,7 @@ body,
   border-radius: 12px;
   padding: 10px 14px;
   font-weight: 700;
+  z-index: 2;
 }
 
 .popup {
@@ -77,12 +77,10 @@ body,
 }
 
 /* Drone icon */
-/* Update the drone-wrapper style */
 .drone-wrapper {
   width: 20px;
   height: 20px;
   position: relative;
-  /* Remove the translate transform as it will be handled by Mapbox */
 }
 
 /* Remove these styles as we're using SVG now */
@@ -98,14 +96,13 @@ body,
   display: none;
 }
 .drone-arrow {
-  width: 0;
-  height: 0;
+  width: 5px;
+  height: 5px;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
   border-bottom: 14px solid white;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6));
 }
-/* .drone-body { width: 8px; height: 8px; border-radius: 50%; margin-top: 2px; } */
 .drone-body {
   width: 35px;
   height: 35px;
@@ -120,9 +117,6 @@ body,
   height: 65%;
   align-self: center;
 }
-
-/* App Container with Navigation */
-/* Add these styles at the end of the file */
 
 /* Navigation styles */
 .app-container {
