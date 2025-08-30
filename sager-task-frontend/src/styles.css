@@ -83,29 +83,17 @@ body,
   position: relative;
 }
 
-/* Remove these styles as we're using SVG now */
 .drone-arrow {
-  display: none;
-}
-
-.drone-body {
-  display: none;
-}
-
-.drone-icon {
-  display: none;
-}
-.drone-arrow {
-  width: 5px;
-  height: 5px;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 14px solid white;
+  width: 1px;
+  height: 1px;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 8px solid white;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.6));
 }
 .drone-body {
-  width: 35px;
-  height: 35px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   margin-top: 2px;
   display: flex;

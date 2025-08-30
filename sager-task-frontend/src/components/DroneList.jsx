@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectDrone,
@@ -5,42 +6,88 @@ import {
   selectAllDrones,
 } from "../store/dronesSlice";
 import { isAllowed } from "../utils/formatters";
-
-
+import droneImg from "../assets/drone.svg";
 
 export default function DroneList() {
   const drones = useSelector(selectAllDrones);
   const selected = useSelector(selectSelected);
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(true);
 
-  const sorted = [...drones].sort((a, b) => b.lastTimestamp - a.lastTimestamp);
+  const sortedDrones = [...drones].sort(
+    (a, b) => b.lastTimestamp - a.lastTimestamp
+  );
+
+  const toggleList = () => {
+    setIsOpen(!isOpen);
+  };
+
+  if (!isOpen) {
+    return (
+      <div className="sidebar collapsed">
+        <div className="drone-icon-circle" onClick={toggleList}>
+          <img src={droneImg} alt="Drone List" className="DroneListIcon" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="sidebar">
-      <div className="title">DRONE FLYING</div>
+      <div className="DroneListHead">
+        <div className="DroneListTitle">
+          <div className="title">DRONE FLYING</div>
+          <button className="DroneListBtn" onClick={toggleList}>
+            X
+          </button>
+        </div>
+        <div className="DroneListOptions">
+          <a href="#" className="DronListOption DroneOption">
+            Drones
+          </a>
+          <a href="#" className="DronListOption HistoryOption">
+            Flights History
+          </a>
+        </div>
+      </div>
+
       <div className="list">
-        {sorted.map((d) => {
-          const active = selected === d.serial;
-          const allowed = isAllowed(d.registration);
+        {sortedDrones.map((drone) => {
+          const isActive = selected === drone.registration;
+          const isRegistrationAllowed = isAllowed(drone.registration);
 
           return (
             <div
-              key={d.serial}
-              className={`item ${active ? "active" : ""}`}
-              onClick={() => dispatch(selectDrone(d.serial))}
+              key={drone.registration}
+              className={`item ${isActive ? "active" : ""}`}
+              onClick={() => dispatch(selectDrone(drone.registration))}
             >
-              <div>
-                <div style={{ fontWeight: 700 }}>
-                  {d.name}{" "}
-                  <span className={`badge ${allowed ? "green" : "red"}`} />
+              <div className="DroneListItems">
+                <div className="DroneListItemsName">
+                  <div>{drone.name}</div>
                 </div>
-                <div className="meta">Serial: {d.serial}</div>
-                <div className="meta">Registration: {d.registration}</div>
-                <div className="meta">
-                  Pilot: {d.pilot} • Org: {d.organization}
+
+                <div className="DroneListItemsDetails">
+                  <div className="meta">
+                    Serial # <br /> {drone.serial}
+                  </div>
+                  <div className="meta">
+                    Registration # <br /> {drone.registration}
+                  </div>
+                  <div className="meta">
+                    Pilot <br /> {drone.pilot}
+                  </div>
+                  <div className="meta">
+                    Organization <br /> {drone.organization}
+                  </div>
                 </div>
               </div>
-              <div className="meta">Alt {d.altitude}m</div>
+
+              <div className="DroneListItems">
+                <span
+                  className={`badge ${isRegistrationAllowed ? "green" : "red"}`}
+                />
+              </div>
             </div>
           );
         })}

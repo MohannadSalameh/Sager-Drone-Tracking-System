@@ -14,8 +14,8 @@ exports.connection = (io) => {
     console.log(`-> Client ${socket.id} connected`);
 
     setInterval(function () {
-      socket.emit('message', GenerateData());
-    }, 5000); // Changed to 5 seconds
+      socket.emit("message", GenerateData());
+    }, 1000); // every second
 
     socket.on("disconnect", () => {
       console.log(`-> Client ${socket.id} disconnected`);
@@ -23,35 +23,34 @@ exports.connection = (io) => {
   });
 };
 
-
 function GenerateData() {
-
   return {
-    "type": "FeatureCollection",
-    "features": [
-     {
-        "type": "Feature",
-        "properties": {
-          "serial": makeID(10),
-          "registration": "SD-" +makeID(2), 
-          "Name": "Dji Mavic",
-          "altitude": Math.floor(Math.random() * 100),
-          "pilot": "Besher",
-          "organization" : " Sager Drone",
-          "yaw" : 120 + Math.floor(Math.random() * 20)
+    type: "FeatureCollection",
+    features: [
+      {
+        type: "Feature",
+        properties: {
+          serial: makeID(10),
+          registration: "SD-" + makeID(2),
+          Name: "Dji Mavic",
+          altitude: Math.floor(Math.random() * 100),
+          pilot: "Besher",
+          organization: " Sager Drone",
+          yaw: 120 + Math.floor(Math.random() * 20), //هكذا لن ينتج اي اسهم الى الاسفل يمين
+          // "yaw": Math.floor(Math.random() * 360)
         },
-        "geometry": {
-          "coordinates": makeLocation(),
-          "type": "Point"
-        }
-      }
-    ]
-  }
+        geometry: {
+          coordinates: makeLocation(),
+          type: "Point",
+        },
+      },
+    ],
+  };
 }
 
 function makeID(number) {
-  const characters = 'ABCD';
-  let result = '';
+  const characters = "ABCD";
+  let result = "";
 
   for (let i = 0; i < number; i++) {
     result += characters.charAt(Math.floor(Math.random() * 4));
@@ -63,8 +62,7 @@ function makeID(number) {
 function makeLocation() {
   base = [
     35.93131881204147 + (Math.random() * 2 - 1) / 10,
-    31.94878648036645 + (Math.random() * 2 - 1) / 10
-  ]
+    31.94878648036645 + (Math.random() * 2 - 1) / 10,
+  ];
   return base;
 }
-
